@@ -150,10 +150,7 @@ class Gun extends Firearm {
 
 	public float use()
 	{
-		Random generator = new Random();
-		float damage = (float)generator.nextDouble();
-		if (damage > destructivePower)
-			damage = destructivePower;
+		float damage = 
 		return damage;
 	}
 
