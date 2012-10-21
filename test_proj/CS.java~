@@ -127,8 +127,7 @@ abstract class Firearm extends Weapon implements Damage {
 class Gun extends Firearm {
 	int maxBulletsCount, maxBulletsCountInMagazine, currentBulletsCount; currentBulletsCountInMagazine, ammoSetPrice;
 
-	Gun()
-	{
+	Gun() {
 		super();
 		System.out.print("Maximum number of bullets that can be carried: ");
 		maxBulletsCount = KBInput.readInt();
@@ -148,44 +147,49 @@ class Gun extends Firearm {
 		ammoSetPrice = price;
 	}
 
-	public float use()
-	{
-		float damage = 
+	public float use() {
+		Random generator = new Random();
+		float damage = (float)generator.nextDouble();
+		if (damage > destructivePower)
+			damage = destructivePower;
 		return damage;
 	}
 
-	public void addAmmo()
-	{
-
+	public void addAmmo(Gamer shooter) {
+		if (shooter.money >= ammoSetPrice) {
+			currentBulletsCount = maxBulletsCount;
+			shooter.money -= ammoSetPrice;
+		}
 	}
 
-	public boolean decrementBulletsCount()
-	{
-	
+	public boolean decrementBulletsCount() {
+		if (currentBulletsCountInMagazine > 0) 
+			currentBulletsCountInMagazine--;
+		else if (currentBulletsCount > 0) {
+			if (currentBulletsCount > maxBulletsCountInMagazine) {
+				currentBulletsCountInMagazine = maxBulletsCountInMagazine;
+				currentBulletsCount -= maxBulletsCountInMagazine;
+			else {
+				currentBulletsCountInMagazine = currentBulletsCount;
+				currentBulletsCount = 0;
+			}
+			currentBulletsCountInMagazine--;
+		}
 	}
 }
 
-class ExplosiveWeapon extends Firearm
-{
+class ExplosiveWeapon extends Firearm {
 	int maxGrenadesCount, currentGrenadesCount;
 	
-	ExplosiveWeapon()
-	{
+	ExplosiveWeapon() {
 
 	}
 
-	public float use()
-	{
+	public float use() {
 
 	}
 
-	public void addAmmo()
-	{
-
-	}
-
-	finalize()
-	{
+	public void addAmmo() {
 
 	}
 }
