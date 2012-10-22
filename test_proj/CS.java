@@ -387,6 +387,10 @@ class ExplosiveWeapon extends Firearm {
 		return currentGrenadesCount;
 	}
 
+	public int get_AmmoSetPrice() {
+		return ammoSetPrice;
+	}
+
 ////////* set_* methods *////////
 	public boolean set_maxdmg(float newmaxdmg) {
 		boolean success = super.set_maxdmg(newmaxdmg);
