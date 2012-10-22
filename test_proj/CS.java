@@ -150,7 +150,7 @@ class Gun extends Firearm {
 		while (!x);
 		currentBulletsCount = 0;
 		currentBulletsCountInMagazine = maxBulletsCountInMagazine;
-		System.out.println("The price for a set of ammo for this weapon, $: );
+		System.out.println("The price for a set of ammo for this weapon, $: ");
 		do {
 			if (!(x = set_ammoSetPrice(KBIntput.readInt())))
 				System.out.print("Please, try again: ");
