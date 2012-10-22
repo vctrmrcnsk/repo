@@ -324,7 +324,7 @@ class ExplosiveWeapon extends Firearm {
 		}
 		while (!x);
 		currentGrenadesCount = 0;
-		System.out.println("The price for a set of these grenades, $: );
+		System.out.println("The price for a set of these grenades, $: ");
 		do {
 			if (!(x = set_ammoSetPrice(KBIntput.readInt())))
 				System.out.print("Please, try again: ");
