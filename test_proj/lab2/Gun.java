@@ -4,38 +4,36 @@ import java.io.*;
 import java.util.*;
 
 class Gun extends Firearm {
-	int maxBulletsCount, maxBulletsCountInMagazine, currentBulletsCount; currentBulletsCountInMagazine, ammoSetPrice;
+	int maxBulletsCount, maxBulletsCountInMagazine, currentBulletsCount, currentBulletsCountInMagazine;
 
-	Gun() {
-		boolean x;
-
+	Gun() throws IOException {
 		super();
+		boolean x;
 		System.out.print("Maximum number of bullets that can be carried: ");
 		do {
-			if (!(x = set_maxBulletsCount(KBIntput.readInt())))
+			if (!(x = set_maxBulletsCount(KBInput.readInt())))
 				System.out.print("Please, try again: ");
 		}
 		while (!x);
 		System.out.print("Maximum number of bullets the magazine can hold: ");
 		do {
-			if (!(x = set_maxBulletsCountInMagazine(KBIntput.readInt())))
+			if (!(x = set_maxBulletsCountInMagazine(KBInput.readInt())))
 				System.out.print("Please, try again: ");
 		}
 		while (!x);
 		currentBulletsCount = 0;
 		currentBulletsCountInMagazine = maxBulletsCountInMagazine;
-		System.out.println("The price for a set of ammo for this weapon, $: ");
+		/* System.out.println("The price for a set of ammo for this weapon, $: ");
 		do {
-			if (!(x = set_ammoSetPrice(KBIntput.readInt())))
+			if (!(x = set_ammoSetPrice(KBInput.readInt())))
 				System.out.print("Please, try again: ");
 		}
-		while (!x);
+		while (!x); */
 	}
 
-	Gun(float maxdmg, int mbc, int mbcim, int price) {
-		boolean x;
-
+	Gun(float maxdmg, int mbc, int mbcim) throws IOException {
 		super(maxdmg);
+		boolean x;
 		if (!(x = set_maxBulletsCount(mbc))) {
 			System.out.println("Will set the default value of 30");
 			maxBulletsCount = 30;
@@ -46,10 +44,10 @@ class Gun extends Firearm {
 		}
 		currentBulletsCount = 0;
 		currentBulletsCountInMagazine = maxBulletsCountInMagazine;
-		if (!(x = set_ammoSetPrice(price))) {
+		/* if (!(x = set_ammoSetPrice(price))) {
 			System.out.println("Will set the default value of 30");
 			ammoSetPrice = 30;
-		}
+		} */
 	}
 
 	public float use() { //implement cycle for automatic fire
@@ -61,15 +59,17 @@ class Gun extends Firearm {
 	}
 
 	public boolean addAmmo(Gamer shooter) {
-		boolean x;
+		currentBulletsCount = maxBulletsCount;
+		return true;
+		/* boolean x;
 
-		//if (shooter.get_money() >= ammoSetPrice) {
+		 //if (shooter.get_money() >= ammoSetPrice) {
 		if (x = shooter.set_money(shooter.get_money() - ammoSetPrice, ammoSetPrice)) {
 			currentBulletsCount = maxBulletsCount;
 			//in Gamer will define the set_money method like public boolean set_money(int newmoney, int bill) {...}
 			return true;
 		}
-		return false;
+		return false; */
 	}
 
 	public boolean decrementBulletsCount() {
@@ -114,9 +114,9 @@ class Gun extends Firearm {
 		return currentBulletsCountInMagazine;
 	}
 
-	public int get_ammoSetPrice() {
+	/* public int get_ammoSetPrice() {
 		return ammoSetPrice;
-	}
+	} */
 
 ////////* set_* methods *////////
 	public boolean set_maxdmg(float newmaxdmg) {
@@ -154,16 +154,6 @@ class Gun extends Firearm {
 		return false;
 	}
 
-	public boolean set_currentBulletsCount(int newCurrentBulletsCount) {
-		if (newCurrentBulletsCount >= 0) {
-			currentBulletsCount = newCurrentBulletsCount;
-			return true;
-		}
-		else
-			System.out.println("The current bullets count should be 0 or more!");
-		return false;
-	}
-
 	public boolean set_currentBulletsCountInMagazine(int newCurrentBulletsCountInMagazine) {
 		if (newCurrentBulletsCountInMagazine >= 0) {
 			currentBulletsCountInMagazine = newCurrentBulletsCountInMagazine;
@@ -174,7 +164,7 @@ class Gun extends Firearm {
 		return false;
 	}
 
-	public boolean set_ammoSetPrice(int newAmmoSetPrice) {
+	/* public boolean set_ammoSetPrice(int newAmmoSetPrice) {
 		if (newAmmoSetPrice >= 0) {
 			ammoSetPrice = newAmmoSetPrice;
 			return true;
@@ -182,5 +172,5 @@ class Gun extends Firearm {
 		else
 			System.out.println("Ammo set price should be 0 or more!");
 		return false;
-	}
+	} */
 }

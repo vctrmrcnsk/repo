@@ -9,7 +9,7 @@ abstract class Firearm extends Weapon implements Damage {
 		super();
 	}
 
-	Firearm(float maxdmg) throws IOException {
+	Firearm(float maxdmg) {
 		super(maxdmg);
 	}
 

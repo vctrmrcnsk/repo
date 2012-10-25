@@ -6,12 +6,12 @@ import java.util.*;
 class Knife extends Weapon {
 	final static float destructivePower = 0.9f;
 
-	Knife() {
+	Knife() throws IOException {
 	}
 
 	public float use() {
 		Random generator = new Random();
-		float damage = (float)generator.nextDouble();
+		float damage = generator.nextFloat();
 		if (damage > destructivePower)
 			damage = destructivePower;
 		return damage;

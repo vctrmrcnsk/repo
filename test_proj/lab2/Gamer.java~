@@ -10,15 +10,16 @@ class Gamer {
 ////////* from which the players will randomly select one into their own weapon array
 	Weapon[] weapons;
 	float health;
-	static boolean friendlyFire;
+	static boolean friendlyFire = false;
 	int currentWeapon;
 	int team;
-	int kills, deaths;
+	int kills = 0;
+	int deaths = 0;
 	public static int players, clones;
 
 	boolean x;
 	
-	Gamer() {
+	Gamer() throws IOException {
 		players++;
 		System.out.print("Player's name: ");
 		do {
@@ -50,7 +51,7 @@ class Gamer {
 	Gamer(Gamer clone) {
 		players++;
 		clones++;
-		weapons = new Weapon[4]
+		weapons = new Weapon[4];
 		name = clone.name + "_clone_" + clones;
 		for (int i = 0; i < 4; i++)
 			weapons[i] = clone.weapons[i];
@@ -60,13 +61,17 @@ class Gamer {
 	}
 
 	public boolean isAlive() {
-		if (health > 0)
+		if (health > 0.0f)
 			return true;
 		return false;
 	}
 
 	public boolean hit(Gamer victim) {
-		if (team != victim.team) {
+		Random generator = new Random();
+		if (generator.nextInt(2) == 1)
+			return true;
+		return false;
+		/* if (team != victim.team) {
 			Random generator = new Random();
 			if (generator.nextInt(2) == 1)
 				return true;
@@ -76,7 +81,7 @@ class Gamer {
 			if (generator.nextInt(2) == 1)
 				return true;
 		}
-		return false;
+		return false; */
 	}
 
 	public void hurt(float injury) {
@@ -84,7 +89,8 @@ class Gamer {
 			health -= injury;
 		else {
 			health = 0.0f;
-			deaths++;
+			//deaths++;
+		}
 	}
 
 	public void shoot(Gamer target) {
@@ -93,40 +99,40 @@ class Gamer {
 				int firedBullets;
 				Random generator = new Random();
 				
-				firedBullets = generator.nextInt(weapons[currentWeapon].currentBulletsCountInMagazine) + generator.nextInt(2);
+				firedBullets = generator.nextInt(((Gun)(weapons[currentWeapon])).currentBulletsCountInMagazine) + generator.nextInt(2);
 				for (int i = 0; i < firedBullets; i++) {
 					if (hit(target)) {
 						target.hurt(weapons[currentWeapon].use());
-						if (target.health == 0.0f)
-							kills++;
+						/* if (target.health == 0.0f)
+							kills++; */
 					}
-				weapon[currentWeapon].decrementBulletsCount();
+				((Gun)(weapons[currentWeapon])).decrementBulletsCount();
 				}
 			}
 			else if (currentWeapon == 3) {
 				if (hit(target)) {
 					target.hurt(weapons[currentWeapon].use());
 				}
-				weapons[currentWeapon].decrementGrenadesCount();
+				((ExplosiveWeapon)weapons[currentWeapon]).decrementGrenadesCount();
 			}
 			else {
 				if (hit(target)) {
-					target.hurt(weapon[currentWeapon].use());
+					target.hurt(weapons[currentWeapon].use());
 				}
 			}
 		}
 	}
 
 	public String toString() {
-		str = "";
+		String str = "";
 		str += name + "\t";
-		str += kills + "\t";
-		str += deaths + "\t";
+		str += Integer.toString(kills) + "\t";
+		str += Integer.toString(deaths) + "\t";
 		/*str += " Knife: " + weapon[0].get_destructivePower() + " Gun1: " + weapon[1].get_destructivePower() + " Gun2: " + weapon[2].get_destructivePower() + " Grenades: " + weapon[3].get_destructivePower();*/
-		str += weapon[0].get_destructivePower() + "\t" + weapon[1].get_destructivePower() + "\t" + weapon[2].get_destructivePower() + "\t" + weapon[3].get_destructivePower() + "\t";
-		str += health + "\t";
-		str += currentWeapon + "\t";
-		str += team;
+		str += Float.toString(weapons[0].get_destructivePower()) + "\t" + Float.toString(weapons[1].get_destructivePower()) + "\t" + Float.toString(weapons[2].get_destructivePower()) + "\t" + Float.toString(weapons[3].get_destructivePower()) + "\t";
+		str += Float.toString(health) + "\t";
+		str += Integer.toString(currentWeapon) + "\t";
+		str += Integer.toString(team);
 		return str;
 	}
 
@@ -143,16 +149,24 @@ class Gamer {
 		return health;
 	}
 	
-	public boolean get_friendlyFire() {
+	public static boolean get_friendlyFire() {
 		return friendlyFire;
 	}
 
 	public int get_currentWeapon () {
-		return current_Weapon;
+		return currentWeapon;
 	}
 
 	public int get_team() {
 		return team;
+	}
+	
+	public int get_kills() {
+		return kills;
+	}
+
+	public int get_deaths() {
+		return deaths;
 	}
 
 ////////* set_* methods *////////
@@ -187,7 +201,7 @@ class Gamer {
 		return false;
 	}
 	
-	public boolean set_friendlyFire(boolean newfriendlyFire) {
+	public static boolean set_friendlyFire(boolean newfriendlyFire) {
 		friendlyFire = newfriendlyFire;
 		return true;
 	}
@@ -209,6 +223,26 @@ class Gamer {
 		}
 		else
 			System.out.println("Team can be either 0 or 1 only!");
+		return false;
+	}
+
+	public boolean set_kills(int newkills) {
+		if (newkills >= 0) {
+			kills = newkills;
+			return true;
+		}
+		else
+			System.out.println("Kills shall be 0 or more!");
+		return false;
+	}
+
+	public boolean set_deaths(int newdeaths) {
+		if (newdeaths >= 0) {
+			deaths = newdeaths;
+			return true;
+		}
+		else
+			System.out.println("Deaths shall be 0 or more!");
 		return false;
 	}
 }

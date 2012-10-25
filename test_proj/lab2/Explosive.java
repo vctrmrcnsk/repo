@@ -4,40 +4,40 @@ import java.io.*;
 import java.util.*;
 
 class ExplosiveWeapon extends Firearm {
-	int maxGrenadesCount, currentGrenadesCount, ammoSetPrice;
+	int maxGrenadesCount, currentGrenadesCount;//, ammoSetPrice;
 	
-	ExplosiveWeapon() {
-		boolean x;
-
+	ExplosiveWeapon() throws IOException {
 		super();
+		
+		boolean x;
 		System.out.print("Maximum number of grenades that can be carried: ");
 		do {
-			if (!(x = set_maxGrenadesCount(KBIntput.readInt())))
+			if (!(x = set_maxGrenadesCount(KBInput.readInt())))
 				System.out.print("Please, try again: ");
 		}
 		while (!x);
 		currentGrenadesCount = 0;
-		System.out.println("The price for a set of these grenades, $: ");
+		/* System.out.println("The price for a set of these grenades, $: ");
 		do {
-			if (!(x = set_ammoSetPrice(KBIntput.readInt())))
+			if (!(x = set_ammoSetPrice(KBInput.readInt())))
 				System.out.print("Please, try again: ");
 		}
-		while (!x);
+		while (!x); */
 	}
 
-	ExplosiveWeapon(float power, int mgc, int price) {
-		boolean x;
-
+	ExplosiveWeapon(float power, int mgc) throws IOException {
 		super(power);
+		
+		boolean x;
 		if (!(x = set_maxGrenadesCount(mgc))) {
 			System.out.println("Will set the default value of 2");
 			maxGrenadesCount = 2;
 		}
 		currentGrenadesCount = 0;
-		if (!(x = set_ammoSetPrice(price))) {
+		/* if (!(x = set_ammoSetPrice(price))) {
 			System.out.println("Will set the default value of 100");
 			ammoSetPrice = 100;
-		}
+		} */
 	}
 
 	public float use() {
@@ -48,14 +48,16 @@ class ExplosiveWeapon extends Firearm {
 		return damage;
 	}
 
-	public boolean addAmmo() {
-		boolean x;
+	public boolean addAmmo(Gamer shooter) {
+		currentGrenadesCount = maxGrenadesCount;
+		return true;
+		/* boolean x;
 
-		if (x = shooter.set_money(shooter.get_money() - ammoSetPrice, ammoSetPrice)) {
+		 if (x = shooter.set_money(shooter.get_money() - ammoSetPrice, ammoSetPrice)) {
 			currentGrenadesCount = maxGrenadesCount;
 			return true;
 		}
-		return false;
+		return false; */
 	}
 
 	public boolean decrementGrenadesCount() {
@@ -80,9 +82,9 @@ class ExplosiveWeapon extends Firearm {
 		return currentGrenadesCount;
 	}
 
-	public int get_AmmoSetPrice() {
+	/* public int get_AmmoSetPrice() {
 		return ammoSetPrice;
-	}
+	} */
 
 ////////* set_* methods *////////
 	public boolean set_maxdmg(float newmaxdmg) {
@@ -110,7 +112,7 @@ class ExplosiveWeapon extends Firearm {
 		return false;
 	}
 
-	public boolean set_ammoSetPrice(int newAmmoSetPrice) {
+	/* public boolean set_ammoSetPrice(int newAmmoSetPrice) {
 		if (newAmmoSetPrice >= 0) {
 			ammoSetPrice = newAmmoSetPrice;
 			return true;
@@ -118,5 +120,5 @@ class ExplosiveWeapon extends Firearm {
 		else
 			System.out.println("Ammo set price should be 0 or more!");
 		return false;
-	}
+	} */
 }

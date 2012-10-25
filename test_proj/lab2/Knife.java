@@ -6,7 +6,8 @@ import java.util.*;
 class Knife extends Weapon {
 	final static float destructivePower = 0.9f;
 
-	Knife() {
+	Knife() throws IOException {
+		super();
 	}
 
 	public float use() {
