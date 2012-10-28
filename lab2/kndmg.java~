@@ -1,3 +1,0 @@
-interface Knifedmg {
-	final static float destructivePower = 0.9f;
-}
