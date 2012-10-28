@@ -46,12 +46,12 @@ public class KBInput {
 				BufferedReader value = new BufferedReader(new InputStreamReader(System.in));
 				str = value.readLine();
 			}
-			catch (IOException e) {
+			catch (Exception e) {
 				x = true;
 				System.out.println("Could not read from input! Try again.");
 			}
 		}
-		while (x);
+		while (x || isEmpty(str));
 		return str;
 	}
 }

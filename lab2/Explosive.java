@@ -16,7 +16,7 @@ class ExplosiveWeapon extends Firearm {
 				System.out.print("Please, try again: ");
 		}
 		while (!x);
-		currentGrenadesCount = 0;
+		currentGrenadesCount = 1;
 		/* System.out.println("The price for a set of these grenades, $: ");
 		do {
 			if (!(x = set_ammoSetPrice(KBInput.readInt())))
@@ -33,7 +33,7 @@ class ExplosiveWeapon extends Firearm {
 			System.out.println("Will set the default value of 2");
 			maxGrenadesCount = 2;
 		}
-		currentGrenadesCount = 0;
+		currentGrenadesCount = 1;
 		/* if (!(x = set_ammoSetPrice(price))) {
 			System.out.println("Will set the default value of 100");
 			ammoSetPrice = 100;
@@ -48,7 +48,7 @@ class ExplosiveWeapon extends Firearm {
 		return damage;
 	}
 
-	public boolean addAmmo(Gamer shooter) {
+	public boolean addAmmo() {
 		currentGrenadesCount = maxGrenadesCount;
 		return true;
 		/* boolean x;
@@ -65,7 +65,11 @@ class ExplosiveWeapon extends Firearm {
 			currentGrenadesCount--;
 			return true;
 		}
-		return false;
+		else {
+			addAmmo();
+			return true;
+		}
+		//return false;
 	}
 
 ////////* get_* methods *////////

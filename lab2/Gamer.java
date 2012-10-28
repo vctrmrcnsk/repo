@@ -20,8 +20,9 @@ class Gamer {
 	boolean x;
 	
 	Gamer() throws IOException {
+		Random generator = new Random();
 		players++;
-		System.out.print("Player's name: ");
+		System.out.print("\nPlayer's name: ");
 		do {
 			if (!(x = set_name(KBInput.readStr())))
 				System.out.println("Please, try again.");
@@ -29,19 +30,19 @@ class Gamer {
 		while (!x);
 		weapons = new Weapon[4];
 		health = 1.0f;
-		System.out.print("Choose the player's current weapon (slot 0-3): ");
+		/* System.out.print("Choose the player's current weapon (slot 0-3): "); */
 		do {
-			if (!(x = set_currentWeapon(KBInput.readInt())))
+			if (!(x = set_currentWeapon(generator.nextInt(4))))
 				System.out.println("Please, try again.");
 		}
 		while (!x);
+		System.out.println("Player's current weapon slot is " + currentWeapon);
 		System.out.print("Player is in team (0 or 1): ");
 		do {
 			if (!(x = set_team(KBInput.readInt())))
 				System.out.println("Please, try again.");
 		}
 		while (!x);
-		kills = 0;
 	}
 	
 	/* Gamer(String name, float hp, boolean friendFire, int cWeapon, int team) {
@@ -57,7 +58,6 @@ class Gamer {
 			weapons[i] = clone.weapons[i];
 		health = clone.health;
 		team = clone.team;
-		kills = 0;
 	}
 
 	public boolean isAlive() {
@@ -66,7 +66,7 @@ class Gamer {
 		return false;
 	}
 
-	public boolean hit(Gamer victim) {
+	public boolean hit() {
 		Random generator = new Random();
 		if (generator.nextInt(2) == 1)
 			return true;
@@ -87,36 +87,42 @@ class Gamer {
 	public void hurt(float injury) {
 		if (injury < health)
 			health -= injury;
-		else {
+		else
 			health = 0.0f;
 			//deaths++;
-		}
 	}
 
 	public void shoot(Gamer target) {
 		if (isAlive()) {
 			if (currentWeapon == 1 || currentWeapon == 2) {
-				int firedBullets;
+				/* int firedBullets;
 				Random generator = new Random();
+
+				/* if (((Gun)(weapons[currentWeapon])).get_currentBulletsCount() == 0)
+					((Gun)weapons[currentWeapon]).addAmmo();
 				
-				firedBullets = generator.nextInt(((Gun)(weapons[currentWeapon])).currentBulletsCountInMagazine) + generator.nextInt(2);
-				for (int i = 0; i < firedBullets; i++) {
-					if (hit(target)) {
+				int bullets = ((Gun)(weapons[currentWeapon])).get_currentBulletsCountInMagazine() + 1;
+				firedBullets = generator.nextInt(bullets);
+				System.out.println("bullets: " + bullets + " firedBullets: " + firedBullets); */
+				for (int i = 0; i < 2; i++) {
+					((Gun)(weapons[currentWeapon])).decrementBulletsCount();
+					if (hit()) {
 						target.hurt(weapons[currentWeapon].use());
 						/* if (target.health == 0.0f)
 							kills++; */
 					}
-				((Gun)(weapons[currentWeapon])).decrementBulletsCount();
 				}
 			}
 			else if (currentWeapon == 3) {
-				if (hit(target)) {
+				/* if (((ExplosiveWeapon)(weapons[currentWeapon])).get_currentGrenadesCount() == 0)
+					((ExplosiveWeapon)weapons[currentWeapon]).addAmmo(); */
+				((ExplosiveWeapon)weapons[currentWeapon]).decrementGrenadesCount();
+				if (hit()) {
 					target.hurt(weapons[currentWeapon].use());
 				}
-				((ExplosiveWeapon)weapons[currentWeapon]).decrementGrenadesCount();
 			}
 			else {
-				if (hit(target)) {
+				if (hit()) {
 					target.hurt(weapons[currentWeapon].use());
 				}
 			}
@@ -130,7 +136,7 @@ class Gamer {
 		str += Integer.toString(deaths) + "\t\t";
 		/*str += " Knife: " + weapon[0].get_destructivePower() + " Gun1: " + weapon[1].get_destructivePower() + " Gun2: " + weapon[2].get_destructivePower() + " Grenades: " + weapon[3].get_destructivePower();*/
 		str += Float.toString(weapons[0].get_destructivePower()) + "\t\t" + Float.toString(weapons[1].get_destructivePower()) + "\t\t" + Float.toString(weapons[2].get_destructivePower()) + "\t\t" + Float.toString(weapons[3].get_destructivePower()) + "\t\t";
-		str += Float.toString(health) + "\t\t";
+		str += String.format("%.2f", health) + "\t\t";
 		str += Integer.toString(currentWeapon) + "\t\t";
 		str += Integer.toString(team);
 		return str;
@@ -153,7 +159,7 @@ class Gamer {
 		return friendlyFire;
 	}
 
-	public int get_currentWeapon () {
+	public int get_currentWeapon() {
 		return currentWeapon;
 	}
 

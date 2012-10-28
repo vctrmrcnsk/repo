@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.*;
 
 class Knife extends Weapon {
-	final static float destructivePower = 0.9f;
+	final static float kndestructivePower = 0.9f;
 
 	Knife() throws IOException {
-		super();
+		super(kndestructivePower);
 	}
 
 	public float use() {

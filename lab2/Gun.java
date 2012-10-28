@@ -58,7 +58,7 @@ class Gun extends Firearm {
 		return damage;
 	}
 
-	public boolean addAmmo(Gamer shooter) {
+	public boolean addAmmo() {
 		currentBulletsCount = maxBulletsCount;
 		return true;
 		/* boolean x;
